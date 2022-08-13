@@ -1,0 +1,30 @@
+﻿
+@*@{
+    ViewBag.Title = "Index";
+}
+
+@{ var myMessage = "Hello Word";}
+@myMessage
+@{ 
+    var greeting = "Welcom to our site ";
+    var weekDay = "Datetime.Now.DayOfWeek";
+    var greetingMessage = greeting + "Here in Huston it is: " + weekDay;
+}
+<p>The greeting is: @greetingMessage </p>*@
+
+<html>
+<body>
+    @*@for (var i =10; i<21;i++ )
+    { <p>Line @i</p>}*@
+
+    @{ 
+        var i = 0;
+        while (i<5)
+        {
+            ++i;
+            <p> Line @i</p>
+        }
+    }
+
+</body>
+</html>
