@@ -17,12 +17,20 @@ namespace WebsiteBanHang.Areas.Admin.Controllers
         WebsiteBanHangEntities objWebsiteBanHangEntities = new WebsiteBanHangEntities();
 
         // GET: Admin/Product
-        public ActionResult Index(string SearchString)
+        public ActionResult Index (string SearchString)
         {
-            //Lấy all tất cả các sản phẩm
-            //var listProduct = objWebsiteBanHangEntities.Product.ToList();
-            var listProduct = objWebsiteBanHangEntities.Product.Where(n=>n.Name.Contains(SearchString)).ToList();
-            return View(listProduct);
+            List<Product>  product;
+
+            if (!string.IsNullOrEmpty(SearchString))
+
+            {
+                product = objWebsiteBanHangEntities.Product.Where(p => p.Name.Contains(SearchString)).ToList();
+            }
+            else
+            {
+                product = objWebsiteBanHangEntities.Product.ToList();
+            }
+            return View(product);
         }
         public ActionResult Create()
         {
