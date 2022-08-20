@@ -9,13 +9,14 @@ using WebsiteBanHang.Models;
 
 namespace WebsiteBanHang.Context
  {
-        //[MetadataType(typeof(UsersMasterData))]
-        //public partial class Users
-        //{
-        //}
+    [MetadataType(typeof(UsersMasterData))]
+    public partial class Users
+    {
+
+    }
 
     [MetadataType(typeof(ProductMasterData))]
-    public partial class ProductMasterData
+    public partial class Product
     {
         [NotMapped]
         public System.Web.HttpPostedFileBase ImageUpload { get; set; }

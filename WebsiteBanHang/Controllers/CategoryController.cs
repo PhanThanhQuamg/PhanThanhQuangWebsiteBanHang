@@ -13,7 +13,7 @@ namespace WebsiteBanHang.Controllers
         // GET: Category
         public ActionResult Index()
         {
-            var lstCategory = objWebsiteBanHangEntities.Categories.ToList();
+            var lstCategory = objWebsiteBanHangEntities.Category.ToList();
             return View(lstCategory);
         }
         public ActionResult ProductCategory(int Id)

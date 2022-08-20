@@ -26,10 +26,10 @@ namespace WebsiteBanHang.Context
         }
     
         public virtual DbSet<Brand> Brand { get; set; }
-        public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Users> Users { get; set; }
-
+        public virtual DbSet<OrderDetail> OrderDetail { get; set; }
+        public virtual DbSet<Order> Order { get; set; }
     }
 }
