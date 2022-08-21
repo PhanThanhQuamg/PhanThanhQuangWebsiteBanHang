@@ -27,8 +27,9 @@ namespace WebsiteBanHang.Models
         public Nullable<double> PriceDiscount { get; set; }
         [Display(Name = "Loại sản phẩm")]
         public Nullable<int> Typeld { get; set; }
-        [Display(Name = "Thương hiệu")]
+
         public string Slug { get; set; }
+        [Display(Name = "Loại")]
         public Nullable<int> Brandld { get; set; }
         public Nullable<bool> Deleted { get; set; }
         public Nullable<bool> ShowOnHomePage { get; set; }

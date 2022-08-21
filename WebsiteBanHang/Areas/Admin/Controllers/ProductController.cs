@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -17,20 +18,32 @@ namespace WebsiteBanHang.Areas.Admin.Controllers
         WebsiteBanHangEntities objWebsiteBanHangEntities = new WebsiteBanHangEntities();
 
         // GET: Admin/Product
-        public ActionResult Index (string SearchString)
+        public ActionResult Index (string currentFilter, string SearchString , int? page)
         {
-            List<Product>  product;
+                List<Product> products;
+                if (SearchString != null)
+                {
+                    page = 1;
 
-            if (!string.IsNullOrEmpty(SearchString))
+                }
+                else
+                {
+                SearchString = currentFilter;
+                }
+                if (!string.IsNullOrEmpty(SearchString))
 
-            {
-                product = objWebsiteBanHangEntities.Product.Where(p => p.Name.Contains(SearchString)).ToList();
-            }
-            else
-            {
-                product = objWebsiteBanHangEntities.Product.ToList();
-            }
-            return View(product);
+                {
+                    products = objWebsiteBanHangEntities.Product.Where(p => p.Name.Contains(SearchString)).ToList();
+                }
+                else
+                {
+                    products = objWebsiteBanHangEntities.Product.ToList();
+                }
+                ViewBag.CurrentFilter = SearchString;
+                int pageSize = 4;
+                int pageNumber = (page ?? 1);
+                products = products.OrderByDescending(n => n.Id).ToList();
+                return View(products.ToPagedList(pageNumber, pageSize));
         }
         public ActionResult Create()
         {
@@ -54,7 +67,6 @@ namespace WebsiteBanHang.Areas.Admin.Controllers
         }
         [ValidateInput(false)]
         [HttpPost]
-
         public ActionResult Create(Product objProduct)
         {
 
@@ -112,13 +124,15 @@ namespace WebsiteBanHang.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Edit(int Id)
         {
+            this.loadData();
             var objProduct = objWebsiteBanHangEntities.Product.Where(n => n.Id == Id).FirstOrDefault();
             return View(objProduct);
         }
+        [ValidateInput(false)]
         [HttpPost]
         public ActionResult Edit( Product objProduct)
         {
-
+            this.loadData();
             if (objProduct.ImageUpload != null)
             {
                 string fileName = Path.GetFileNameWithoutExtension(objProduct.ImageUpload.FileName);

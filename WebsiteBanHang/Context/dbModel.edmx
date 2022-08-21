@@ -56,6 +56,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
           <Property Name="Avatar" Type="nvarchar" MaxLength="100" />
           <Property Name="CategoryId" Type="int" />
@@ -71,7 +72,6 @@
           <Property Name="DisPlayOrder" Type="int" />
           <Property Name="CreatedOnUtc" Type="datetime" />
           <Property Name="UpdatedOnUtc" Type="datetime" />
-          <Property Name="Id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
