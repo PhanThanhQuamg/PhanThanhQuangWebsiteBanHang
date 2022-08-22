@@ -1,0 +1,109 @@
+﻿@model WebsiteBanHang.Context.Brand
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Chi tiết sản phẩm</h2>
+
+<div class="content-wrapper">
+    <section class="content my-3">
+        <div class="card">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong style="color:red">CHI TIẾT SẢN PHẨM</strong>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <a href="@Url.Action("Edit","Brand",  new { id = Model.Id })" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i>Cập Nhật</a>
+                        <a href="@Url.Action("Index","Brand")" class="btn btn-sm btn-info"><i class="fas fa-long-arrow-alt-left"></i>Trở Về Danh Sách</a>
+
+                    </div>
+                </div>
+            }
+        <div class="card-body">
+=                <table class="table table-bordered">
+
+                        <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.Name)
+                    </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.Avatar)
+                            </td>                            
+                            <td style="width:200px;">
+                                <img src="~/Content/images/thuonghieu/@Model.Avatar" class="img-fluid" alt="#" />
+                            </td>                           
+                        </tr>
+                        <tr>
+
+                    <td>
+                        @Html.DisplayNameFor(model => model.Slug)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.Slug)
+                    </td>
+                        </tr>
+                        <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.ShowOnHomePage)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.ShowOnHomePage)
+                    </td>
+                        </tr>
+
+                        <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.DisPlayOrder)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.DisPlayOrder)
+                    </td>
+                        </tr>
+                        <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.CreatedOnUtc)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.CreatedOnUtc)
+                    </td>
+                        </tr>
+                        <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.UpdatedOnUtc)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.UpdatedOnUtc)
+                    </td>
+                        </tr>
+                        <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Deleted)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(model => model.Deleted)
+                    </td>
+                        </tr>
+            </table>
+            </div>
+        </div>
+      
+    </section>
+  
+
+</div>

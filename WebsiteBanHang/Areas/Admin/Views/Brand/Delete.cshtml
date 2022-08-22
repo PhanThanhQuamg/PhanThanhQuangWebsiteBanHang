@@ -1,0 +1,116 @@
+﻿@model WebsiteBanHang.Context.Brand
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+<div class="content-wrapper">
+    <br /> <h3>Bạn chắc chắn muốn xóa sản phẩm này ?</h3>
+        <div class="card">
+            <div class="card-header">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-md-6">
+                            <strong style="color:red">CHI TIẾT SẢN PHẨM</strong>
+                        </div>
+                        <div class="col-md-6 text-right">
+
+                            @using (Html.BeginForm("Delete", "Brand", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div class="form-actions no-color">
+                                    <input type="submit" value="Delete" class="btn btn-sm btn-info" />
+                                    <a href="@Url.Action("Index","Product")" class="btn btn-sm btn-info"><i class="fas fa-long-arrow-alt-left"></i>Trở Về Danh Sách</a>
+                                </div>
+                            }
+
+
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th style="width:80px;color:red;text-align:center">Tiêu Đề</th>
+                        <th style="color:green;text-align:center">Nội Dung</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Name)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayNameFor(model => model.Avatar)
+                        </td>
+                        <td style="width:80px;">
+                            <img src="~/Content/images/thuonghieu/@Model.Avatar" class="img-fluid" alt="#" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayNameFor(model => model.Slug)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(model => model.Slug)
+                        </td>
+                    </tr>
+                    <tr>
+                            <td>
+                                @Html.DisplayNameFor(model => model.ShowOnHomePage)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => model.ShowOnHomePage)
+                            </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayNameFor(model => model.DisPlayOrder)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(model => model.DisPlayOrder)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayNameFor(model => model.CreatedOnUtc)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(model => model.CreatedOnUtc)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DisplayNameFor(model => model.UpdatedOnUtc)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(model => model.UpdatedOnUtc)
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td>
+                            @Html.DisplayNameFor(model => model.Deleted)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(model => model.Deleted)
+                        </td>
+                    </tr>
+                </table>
+                </div>
+            </div>
+            </div>
