@@ -78,7 +78,7 @@ namespace WebsiteBanHang.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Edit(Brand objBrand)
         {
-            this.loadData();
+           
             if (objBrand.ImageUpload != null)
             {
                 string fileName = Path.GetFileNameWithoutExtension(objBrand.ImageUpload.FileName);
@@ -101,9 +101,9 @@ namespace WebsiteBanHang.Areas.Admin.Controllers
             return View(objBrand);
         }
         [HttpPost]
-        public ActionResult Delete(Brand objBrands)
+        public ActionResult Delete(Brand objBra)
         {
-            var objProduct = objWebsiteBanHangEntities.Product.Where(n => n.Id == objBrands.Id).FirstOrDefault();
+            var objBrands = objWebsiteBanHangEntities.Brand.Where(n => n.Id == objBra.Id).FirstOrDefault();
             objWebsiteBanHangEntities.Brand.Remove(objBrands);
             objWebsiteBanHangEntities.SaveChanges();
             return RedirectToAction("Index");

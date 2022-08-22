@@ -47,6 +47,10 @@ namespace WebsiteBanHang.Areas.Admin.Controllers
         }
         public ActionResult Create()
         {
+
+            this.loadData();
+
+            return View();
             //Common objCommon = new Common();
             //// Láy dữ liệu danh mục dưới DB
             //var lstCat  = objWebsiteBanHangEntities.Category.ToList();
@@ -61,19 +65,15 @@ namespace WebsiteBanHang.Areas.Admin.Controllers
             ////convert sang select list  dạng value , text 
             //ViewBag.ListBrand = objCommon.ToSelectList(dtBrand,"Id", "Name");
 
-            this.loadData();
-
-            return View();
         }
         [ValidateInput(false)]
         [HttpPost]
         public ActionResult Create(Product objProduct)
         {
+            this.loadData();
 
             if (ModelState.IsValid)
             {
-
-                this.loadData();
                 try
                 {
                     if (objProduct.ImageUpload != null)
@@ -95,11 +95,10 @@ namespace WebsiteBanHang.Areas.Admin.Controllers
                 }
                 catch
                 {
-                    return View();
+                    return View(objProduct);
                 }
             }
             return View(objProduct);
-
         }
         [HttpGet]
         public ActionResult Details(int Id)

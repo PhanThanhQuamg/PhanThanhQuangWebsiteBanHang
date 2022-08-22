@@ -10,12 +10,13 @@ namespace WebsiteBanHang.Models
     public partial class ProductMasterData
     {
         public int Id { get; set; }
-        [Required(ErrorMessage ="Vui lòng nhập tên sản phẩm")]
         [Display(Name= "Tên sản phẩm")]
+        [Required(ErrorMessage ="Vui lòng nhập tên sản phẩm")]
         public string Name { get; set; }
         [Display(Name = "Hình đại diện")]
         public string Avatar { get; set; }
         [Display(Name = "Danh mục")]
+        [Required(ErrorMessage = "Vui lòng chọn danh mục")]
         public Nullable<int> CategoryId { get; set; }
         [Display(Name = "Mô tả ngắn")]
         public string ShortDes { get; set; }
