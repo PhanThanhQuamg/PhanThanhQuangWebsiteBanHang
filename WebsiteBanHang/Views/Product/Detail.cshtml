@@ -6,6 +6,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+
 <script type="text/javascript">
     $(function () {
         $("#addtocart").click(function () {
@@ -32,6 +33,23 @@
             return false;
         });
     });
+    function cong() {
+        //lấy giá trị box
+        var t = document.getElementById("ipQuantity").value;
+
+        //cộng thêm 1
+        document.getElementById("ipQuantity").value = parseInt(t) + 1;
+    }
+    function tru() {
+        //lấy giá trị box
+        var t = document.getElementById("ipQuantity").value;
+        if (parseInt(t) > 1)//để không bị âm
+        {
+            //cộng thêm 1
+            document.getElementById("ipQuantity").value = parseInt(t) - 1;
+        }
+
+    }
 </script>
 
 
@@ -117,10 +135,12 @@
                         <dd class="col-sm-9">in Stock</dd>
                     </dl>
 
-                     <div class="form-row  mt-4">
+                    <div class="form-row  mt-4">
                         <div class="form-group col-md flex-grow-0">
                             <div class="input-group mb-3 input-spinner">
+                                <button type="submit" onclick="tru();">-</button>
                                 <input type="text" id="ipQuantity" class="form-control" value="1">
+                                <button type="submit" onclick="cong();">+</button>
                             </div>
                         </div> <!-- col.// -->
                         <div class="form-group col-md">

@@ -136,8 +136,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BrandController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="Context\Brand.cs">
       <DependentUpon>dbModel.tt</DependentUpon>
@@ -179,6 +181,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Models\BrandMasterData.cs" />
     <Compile Include="Models\CartModel.cs" />
+    <Compile Include="Models\CategoryMasterData.cs" />
     <Compile Include="Models\ParialMetadataType.cs" />
     <Compile Include="Models\ProductMasterData.cs" />
     <Compile Include="Global.asax.cs">
@@ -2331,6 +2334,14 @@
     <Content Include="Areas\Admin\Views\Brand\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Brand\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Brand\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
