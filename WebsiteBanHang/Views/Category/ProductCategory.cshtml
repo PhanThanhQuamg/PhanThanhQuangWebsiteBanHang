@@ -1,7 +1,10 @@
-﻿@model List<WebsiteBanHang.Context.Product>
+﻿@model PagedList.IPagedList<WebsiteBanHang.Context.Product>
+@using PagedList.Mvc;
+
 @{
     ViewBag.Title = "ProductCategory";
 }
+<link href="~/Content/css/page.css" rel="stylesheet" />
 
 <!-- ========================= SECTION CONTENT ========================= -->
 <section class="section-content padding-y">
@@ -257,18 +260,8 @@
                 }
 
                 <nav class="mb-4" aria-label="Page navigation sample">
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                        <li class="page-item"><a class="page-link" href="#">5</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
+                    @Html.PagedListPager(Model, page => Url.Action("ProductCategory", "Category", new { page }))
                 </nav>
-
-
                 <div class="box text-center">
                     <p>Did you find what you were looking for？</p>
                     <a href="" class="btn btn-light">Yes</a>

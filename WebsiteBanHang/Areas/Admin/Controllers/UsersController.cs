@@ -1,10 +1,13 @@
 ﻿using Newtonsoft.Json.Bson;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using WebsiteBanHang.Context;
@@ -15,11 +18,33 @@ namespace WebsiteBanHang.Areas.Admin.Controllers
     public class UsersController : Controller
     {
         WebsiteBanHangEntities objWebsiteBanHangEntities = new WebsiteBanHangEntities();
-        // GET: Admin/Brand
-        public ActionResult Index()
+        // GET: Admin/Users
+        public ActionResult Index(string currentFilter, string SearchString, int? page)
         {
-            var lstUsers = objWebsiteBanHangEntities.Users.ToList();
-            return View(lstUsers);
+            List<Users> users;
+            if (SearchString != null)
+            {
+                page = 1;
+
+            }
+            else
+            {
+                SearchString = currentFilter;
+            }
+            if (!string.IsNullOrEmpty(SearchString))
+
+            {
+                users = objWebsiteBanHangEntities.Users.Where(p => p.FirstName.Contains(SearchString)).ToList();
+            }
+            else
+            {
+                users = objWebsiteBanHangEntities.Users.ToList();
+            }
+            ViewBag.CurrentFilter = SearchString;
+            int pageSize = 4;
+            int pageNumber = (page ?? 1);
+            users = users.OrderByDescending(n => n.Id).ToList();
+            return View(users.ToPagedList(pageNumber, pageSize));
         }
         public ActionResult Details(int Id)
         {
@@ -29,8 +54,6 @@ namespace WebsiteBanHang.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            this.loadData();
-
             return View();
 
         }
@@ -38,41 +61,33 @@ namespace WebsiteBanHang.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Create(Users objusers)
         {
-            //if (ModelState.IsValid)
-            //{
-
-                //this.loadData();
-                //try
-                //{
-                //    if (objusers.ImageUpload != null)
-                //    {
-                //        string fileName = Path.GetFileNameWithoutExtension(objusers.ImageUpload.FileName);
-                //        //tenhinh
-                //        string extension = Path.GetExtension(objusers.ImageUpload.FileName);
-                //        //png
-                //        fileName = fileName + extension;
-                //        //tenhinh.png
-                //        objusers.Avatar = fileName;
-                //        objusers.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/images/thuonghieu"), fileName));
-                //    }
-                //    objusers.CreatedOnUtc = DateTime.Now;
+            if (ModelState.IsValid)
+            {
+                var check = objWebsiteBanHangEntities.Users.FirstOrDefault(s => s.Email == objusers.Email);
+                if (check == null)
+                {
+                    objusers.Password = GetMD5(objusers.Password);
+                    objusers.IsAdmin = false; //IsAdmin = false = người dùng
+                    objWebsiteBanHangEntities.Configuration.ValidateOnSaveEnabled = false;
+                    // add user
                     objWebsiteBanHangEntities.Users.Add(objusers);
+                    //lưu thông tin lại
                     objWebsiteBanHangEntities.SaveChanges();
-
+                    // trả về trang chủ
                     return RedirectToAction("Index");
-            //    }
-            //    catch
-            //    {
-            //        return View();
-            //    }
-            //}
-            //var lstUsers = objWebsiteBanHangEntities.Users.ToList();
-            //return View(objusers);
+                }
+                else
+                {
+                    ViewBag.error = "Email đã tồn tại";
+                    return View();
+                }
+            }
+            return View();
         }
         public ActionResult Edit(int Id)
         {
-            this.loadData();
-            var objusers = objWebsiteBanHangEntities.Brand.Where(n => n.Id == Id).FirstOrDefault();
+            
+            var objusers = objWebsiteBanHangEntities.Users.Where(n => n.Id == Id).FirstOrDefault();
             return View(objusers);
         }
         [ValidateInput(false)]
@@ -80,25 +95,14 @@ namespace WebsiteBanHang.Areas.Admin.Controllers
         public ActionResult Edit(Users objusers)
         {
 
-            //if (objusers.ImageUpload != null)
-            //{
-            //    string fileName = Path.GetFileNameWithoutExtension(objusers.ImageUpload.FileName);
-            //    //tenhinh
-            //    string extension = Path.GetExtension(objusers.ImageUpload.FileName);
-            //    //png
-            //    fileName = fileName + extension;
-            //    //tenhinh.png
-            //    objusers.Avatar = fileName;
-            //    objusers.ImageUpload.SaveAs(Path.Combine(Server.MapPath("~/Content/images/thuonghieu"), fileName));
-            //}
-            objWebsiteBanHangEntities.Entry(objusers).State = EntityState.Detached;
+        
             objWebsiteBanHangEntities.Entry(objusers).State = EntityState.Modified;
             objWebsiteBanHangEntities.SaveChanges();
             return RedirectToAction("Index");
         }
         public ActionResult Delete(int Id)
         {
-            var objusers = objWebsiteBanHangEntities.Brand.Where(n => n.Id == Id).FirstOrDefault();
+            var objusers = objWebsiteBanHangEntities.Users.Where(n => n.Id == Id).FirstOrDefault();
             return View(objusers);
         }
         [HttpPost]
@@ -109,40 +113,19 @@ namespace WebsiteBanHang.Areas.Admin.Controllers
             objWebsiteBanHangEntities.SaveChanges();
             return RedirectToAction("Index");
         }
-        void loadData()
+      
+        public static string GetMD5(string str)
         {
-            Common objCommon = new Common();
-            //get data category to DB
-            var listCat = objWebsiteBanHangEntities.Category.ToList();
-            //convert to select list type value,text
-            ListtoDataTableConverter converter = new ListtoDataTableConverter();
-            DataTable dtCategory = converter.ToDataTable(listCat);
-            ViewBag.ListCategory = objCommon.ToSelectList(dtCategory, "Id", "Name");
-
-            //get data brand to DB
-            var listBrand = objWebsiteBanHangEntities.Brand.ToList();
-            DataTable dtBrand = converter.ToDataTable(listBrand);
-            //convert to select list type value,text
-            ViewBag.ListBrand = objCommon.ToSelectList(dtBrand, "Id", "Name");
-
-            //Loại sản phẩm
-            List<ProductType> listProductType = new List<ProductType>();
-
-            ProductType objProductType = new ProductType();
-            objProductType.Id = 01;
-            objProductType.Name = "Giảm giá sốc";
-            listProductType.Add(objProductType);
-
-            objProductType = new ProductType();
-            objProductType.Id = 02;
-            objProductType.Name = "Đề xuất";
-            listProductType.Add(objProductType);
-
-            //get data brand to DB
-            DataTable dtProductType = converter.ToDataTable(listProductType);
-            //convert to select list type value,text
-            ViewBag.ProductType = objCommon.ToSelectList(dtProductType, "Id", "Name");
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] fromData = Encoding.UTF8.GetBytes(str);
+            byte[] targetData = md5.ComputeHash(fromData);
+            string byte2String = null;
+            for (int i = 0; i < targetData.Length; i++)
+            {
+                byte2String += targetData[i].ToString("x2");
+            }
+            return byte2String;
         }
-
     }
+  
 }

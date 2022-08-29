@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Bson;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,11 +17,34 @@ namespace WebsiteBanHang.Areas.Admin.Controllers
     {
         WebsiteBanHangEntities objWebsiteBanHangEntities = new WebsiteBanHangEntities();
         // GET: Admin/Brand
-        public ActionResult Index()
+        public ActionResult Index(string currentFilter, string SearchString, int? page)
         {
-            var lstBrand = objWebsiteBanHangEntities.Brand.ToList();
-            return View(lstBrand);
+            List<Brand> brand;
+            if (SearchString != null)
+            {
+                page = 1;
+
+            }
+            else
+            {
+                SearchString = currentFilter;
+            }
+            if (!string.IsNullOrEmpty(SearchString))
+
+            {
+                brand = objWebsiteBanHangEntities.Brand.Where(p => p.Name.Contains(SearchString)).ToList();
+            }
+            else
+            {
+                brand = objWebsiteBanHangEntities.Brand.ToList();
+            }
+            ViewBag.CurrentFilter = SearchString;
+            int pageSize = 4;
+            int pageNumber = (page ?? 1);
+            brand = brand.OrderByDescending(n => n.Id).ToList();
+            return View(brand.ToPagedList(pageNumber, pageSize));
         }
+
         public ActionResult Details(int Id)
         {
             var lstBrand = objWebsiteBanHangEntities.Brand.Where(n => n.Id == Id).FirstOrDefault();

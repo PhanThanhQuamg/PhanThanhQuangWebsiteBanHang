@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,10 +17,14 @@ namespace WebsiteBanHang.Controllers
             var lstCategory = objWebsiteBanHangEntities.Category.ToList();
             return View(lstCategory);
         }
-        public ActionResult ProductCategory(int Id)
+        public ActionResult ProductCategory(int Id, int? page)
         {
-            var listProduct = objWebsiteBanHangEntities.Product.Where(n => n.CategoryId == Id).ToList();
-            return View(listProduct);
+            if (page == null)
+                page = 1;
+            var listProduct = (from l in objWebsiteBanHangEntities.Product.Where(n => n.CategoryId == Id).OrderBy(n => n.Id) select l);
+            int pageSize = 4;
+            int pageNumber = (page ?? 1);
+            return View(listProduct.ToPagedList(pageNumber, pageSize));
         }
     }
 }
