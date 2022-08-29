@@ -11,7 +11,7 @@ namespace WebsiteBanHang.Models
         WebsiteBanHangEntities objWebsiteBanHangEntities = new WebsiteBanHangEntities();
         public List<Product> SearchByKey(string key)
         {
-            return objWebsiteBanHangEntities.Product.SqlQuery("Select * From Product Where Name like '%" + key + "%'").ToList();
+            return objWebsiteBanHangEntities.Product.SqlQuery("Select * From Product Where Name like N'%" + key + "%'").ToList();
         }
     }
 

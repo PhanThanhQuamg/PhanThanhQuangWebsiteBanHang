@@ -138,6 +138,7 @@
     <Compile Include="Areas\Admin\Controllers\BrandController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeAdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Common.cs" />
@@ -2345,6 +2346,7 @@
     <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
